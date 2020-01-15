@@ -76,8 +76,9 @@ function postFile(file) {
 
 
             //draw the boxes
-            document.getElementById("demo").innerHTML = this.response.yawn;
-
+            document.getElementById("yawn").innerHTML = this.response.yawn;
+            document.getElementById("drow").innerHTML = this.response.drow;
+            document.getElementById("pos").innerHTML = this.response.pos;
             //drawBoxes(objects);
             imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight, 0, 0, uploadWidth, uploadWidth * (v.videoHeight / v.videoWidth));
             imageCanvas.toBlob(postFile, 'image/jpeg');
