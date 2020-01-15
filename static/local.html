@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Tech</title>
     <script src="/static/adapter-latest.js"></script>
-    <!-- <script src="{{ url_for('static', filename='adapter-latest.js') }}"></script> -->
 </head>
 <style>
     video {
@@ -13,11 +12,8 @@
         top: 0;
         left: 0;
         z-index: -1;
-        /* Mirror the local video */
         transform: scale(-1, 1);
-        /*For Firefox (& IE) */
         -webkit-transform: scale(-1, 1);
-        /*for Chrome & Opera (& Safari) */
     }
 
     canvas {
@@ -36,21 +32,10 @@
     pos
     <div id="pos">1</div>
 
-
-    <!-- <script src="{{ url_for('static', filename='adapter-latest.js') }}"></script> -->
-    <!-- <script src="{{ url_for('static', filename='local.js') }}"></script> -->
-    <!-- <script id="objDetect" src="{{ url_for('static', filename='objDetect.js') }}" data-source="myVideo"
-        data-mirror="true" data-uploadWidth="1280" data-scoreThreshold="0.25"></script> -->
-
-
     <video id="myVideo" autoplay></video>
     <script src="/static/local.js"></script>
     <script id="objDetect" src="/static/objDetect.js" data-source="myVideo" data-mirror="true" data-uploadWidth="1280"
         data-scoreThreshold="0.25"></script>
-    <!-- <script src="{{ url_for('static', filename='local.js') }}"></script>
-    <script id="objDetect" src="{{ url_for('static', filename='objDetect.js') }}" data-source="myVideo"
-        data-mirror="true" data-uploadWidth="1280" data-scoreThreshold="0.25"></script> -->
-
 
 </body>
 

@@ -1,15 +1,13 @@
 from scipy.spatial import distance
-from imutils import face_utils
-import imutils
-import dlib
+from imutils import face_utils, resize
+from dlib import get_frontal_face_detector, shape_predictor
 import cv2
 import numpy as np
-from imutils import face_utils
 
 
 class FaceAction:
-    detect = dlib.get_frontal_face_detector()
-    predict = dlib.shape_predictor("/home/ig/Documents/SIH2020/shape_predictor_68_face_landmarks.dat")
+    detect = get_frontal_face_detector()
+    predict = shape_predictor("/home/ig/Documents/SIH2020/shape_predictor_68_face_landmarks.dat")
     (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["left_eye"]
     (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["right_eye"]
     (mStart, mEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["mouth"]
@@ -45,11 +43,6 @@ class FaceAction:
                                [-10.0, -10.0, -10.0],
                                [-10.0, -10.0, 10.0]])
 
-    # def __init__(self):
-    #     self.cap = cv2.VideoCapture(0)
-    #     self.fps = self.cap.get(cv2.CAP_PROP_FPS)
-    #     # print(self.cap.get(cv2.CAP_PROP_FPS))
-
     def eye_aspect_ratio(self, eye):
         A = distance.euclidean(eye[1], eye[5])
         B = distance.euclidean(eye[2], eye[4])
@@ -66,7 +59,7 @@ class FaceAction:
         return mar
 
     def drowsy(self, frame):
-        frame = imutils.resize(frame, width=450)
+        frame = resize(frame, width=450)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         subjects = self.detect(gray, 0)
         for subject in subjects:
@@ -80,7 +73,7 @@ class FaceAction:
             return ear
 
     def yawn(self, frame):
-        frame = imutils.resize(frame, width=450)
+        frame = resize(frame, width=450)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         subjects = self.detect(gray, 0)
         for subject in subjects:
@@ -112,41 +105,17 @@ class FaceAction:
     def head_pose(self, frame):
 
         face_rects = self.detect(frame, 0)
-        shape = self.predict(frame, face_rects[0])
-        shape = face_utils.shape_to_np(shape)
+        if(len(face_rects) > 0):
+            shape = self.predict(frame, face_rects[0])
+            shape = face_utils.shape_to_np(shape)
 
-        _, euler_angle = self.get_head_pose(shape, self.object_pts, self.cam_matrix, self.dist_coeffs, self.reprojectsrc)
-        if(-10 <= euler_angle[2, 0] and euler_angle[2, 0] <= 10):
-            return 1
+            _, euler_angle = self.get_head_pose(shape, self.object_pts, self.cam_matrix, self.dist_coeffs, self.reprojectsrc)
+            if(-10 <= euler_angle[2, 0] and euler_angle[2, 0] <= 10):
+                return 1
+            else:
+                return 0
         else:
-            return 0
-
-    def run(self):
-        c = 0
-        d = 0
-        while True:
-            a, frame = self.cap.read()
-            if (self.drowsy(frame) is None or self.yawn(frame) is None):
-                continue
-            if (self.drowsy(frame) < 0.2):
-                c += 1
-            else:
-                c = 0
-            if (self.yawn(frame) > 0.3):
-                d += 1
-            else:
-                d = 0
-            if (c > self.fps * 5):
-                print("sleeping!", self.drowsy(frame))
-                c = 0
-            if (d > self.fps * 3):
-                print("yawning!", self.yawn(frame))
-                d = 0
+            return
 
     def run_frame(self, frame):
         return (self.drowsy(frame), self.yawn(frame), self.head_pose(frame))
-
-
-# if __name__ == "__main__":
-#     face = FaceAction()
-#     face.run()

@@ -73,8 +73,6 @@ function postFile(file) {
         console.log("inside onload");
         if (this.status === 200) {
             let objects = this.response;
-
-
             //draw the boxes
             document.getElementById("yawn").innerHTML = this.response.yawn;
             document.getElementById("drow").innerHTML = this.response.drow;
