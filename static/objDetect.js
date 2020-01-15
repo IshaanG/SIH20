@@ -72,7 +72,7 @@ function postFile(file) {
     xhr.onload = function () {
         console.log("inside onload");
         if (this.status === 200) {
-            let objects = JSON.parse(this.response);
+            let objects = this.response;
 
 
             //draw the boxes
