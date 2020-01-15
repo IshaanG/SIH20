@@ -62,6 +62,8 @@ class FaceAction:
         frame = resize(frame, width=450)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         subjects = self.detect(gray, 0)
+        if (len(subjects) == 0):
+            return 0
         for subject in subjects:
             shape = self.predict(gray, subject)
             shape = face_utils.shape_to_np(shape)
@@ -76,6 +78,8 @@ class FaceAction:
         frame = resize(frame, width=450)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         subjects = self.detect(gray, 0)
+        if (len(subjects) == 0):
+            return 0
         for subject in subjects:
             shape = self.predict(gray, subject)
             shape = face_utils.shape_to_np(shape)
