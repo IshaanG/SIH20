@@ -2,8 +2,8 @@
 const constraints = {
     audio: false,
     video: {
-        width: { min: 640, ideal: 1280, max: 1920 },
-        height: { min: 480, ideal: 720, max: 1080 }
+        width: { min: 400, ideal: 400, max: 400 },
+        height: { min: 400, ideal: 400, max: 400 }
     }
 };
 
