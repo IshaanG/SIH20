@@ -60,7 +60,7 @@ function postFile(file) {
     formdata.append("threshold", scoreThreshold);
 
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://127.0.0.1:5000/image', true);
+    xhr.open('POST', window.location.origin+'/image', true);
     console.log("posted")
     xhr.responseType = 'json';
     xhr.send(formdata);
