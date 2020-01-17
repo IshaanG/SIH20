@@ -114,7 +114,7 @@ class FaceAction:
             shape = face_utils.shape_to_np(shape)
 
             _, euler_angle = self.get_head_pose(shape, self.object_pts, self.cam_matrix, self.dist_coeffs, self.reprojectsrc)
-            if(-10 <= euler_angle[2, 0] and euler_angle[2, 0] <= 10):
+            if(-20 <= euler_angle[2, 0] and euler_angle[2, 0] <= 30):
                 return 1
             else:
                 return 0
